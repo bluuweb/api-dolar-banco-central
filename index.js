@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 
 app.get("/", cors(), async (req, res) => {
-    console.log("entró aquí");
+    console.log("entró aquí cors");
     try {
         const { data } = await axios.get("https://www.bcentral.cl/inicio");
 

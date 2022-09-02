@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 const app = express();
 
 app.get("/", async (req, res) => {
+    console.log("entró aquí");
     try {
         const { data } = await axios.get("https://www.bcentral.cl/inicio");
 

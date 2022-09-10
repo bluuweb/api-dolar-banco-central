@@ -77,15 +77,15 @@ app.get("/:coin", cors(), async (req, res) => {
             // console.log("result.status : " + result.status)
             if (result.status == "fulfilled") {
                 const $ = cheerio.load(result.value.data);
-                const scrappValue = $(scrapers[index].selector).text().split("/")[0].trim();
+                const scrappValue = $(scrapersFiltered[index].selector).text().split("/")[0].trim();
                 return {
-                    text: scrapers[index].title,
+                    text: scrapersFiltered[index].title,
                     valor: scrappValue,
                     fecha: new Date().toLocaleDateString()
                 }
             } else {
                 return {
-                    text: scrapers[index].title,
+                    text: scrapersFiltered[index].title,
                     valor: "",
                     fecha: new Date().toLocaleDateString()
                 }

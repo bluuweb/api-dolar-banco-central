@@ -4,9 +4,13 @@ import * as cheerio from "cheerio";
 import cors from "cors";
 const app = express();
 
-app.get("/", cors(), async (req, res) => {
-    console.log("entró aquí cors");
+app.get("/:coin", cors(), async (req, res) => {
+    console.log("Parametros: " + req.params.coin);
     try {
+
+        // Esto se me acaba de ocurrir para mejorar y filtrar por tipo de moneda.
+        const coinName =  req.params.coin
+
         // La idea la voy a ir describiendo por pasos, y al final veremos las conclusiones:
 
         // 1 - Crear la lista de "scrapeos" por llamarlos de alguna forma, esto podría crearse en otro método, en otro fichero, tal vez que lo recuperara de una
@@ -41,10 +45,19 @@ app.get("/", cors(), async (req, res) => {
 
         // console.log(scrapers);
 
+        // 1.5 - Filtrar los scrappers dependiendo de la entrada.
+
+        let scrapersFiltered = [];
+        if (coinName.toUpperCase() == "ALL") {
+            scrapersFiltered = scrapers;
+        } else {
+            scrapersFiltered = scrapers.filter( item => item.title.toUpperCase() == coinName.toUpperCase() )
+        }
+
         // 2 - Recuperar el array de promesas para poder lanzarlas todas juntas, en principio doy por supuesto que habrá tantos resultados como promesas, tanto
         //     si fallar como van bien.
 
-        const promisesList = scrapers.map( (item) => { 
+        const promisesList = scrapersFiltered.map( (item) => { 
             return item.axiospromise;
         } );
 
